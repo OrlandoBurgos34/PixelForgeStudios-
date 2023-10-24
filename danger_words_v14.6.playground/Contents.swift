@@ -1,64 +1,71 @@
-let listOfDangerousWords = ["algorithm", "language", "compiler", "variable", "function", "loop", "class", "object", "inheritance", "polymorphism", "encapsulation", "modularity", "debugging", "integration", "development", "frontend", "backend", "database", "API", "framework", "library", "programmer", "syntax", "compilation", "interpretation", "link", "optimization", "repository", "constant"]
- 
-func choiseOfWord(_ listOfDangerousWords: [String]) -> String {
-    let secretWordAssignment = listOfDangerousWords.randomElement() ?? ""
-    return secretWordAssignment
+
+
+// Variable con listado de palabras secretas del incorporadas para el juego
+
+let secretListOfDangerousWords = ["algorithm", "language", "compiler", "variable", "function", "loop", "class", "object", "inheritance", "polymorphism", "encapsulation", "modularity", "debugging", "integration", "development", "frontend", "backend", "database", "API", "framework", "library", "programmer", "syntax", "compilation", "interpretation", "link", "optimization", "repository", "constant"]
+// funcion encargada de seleccionar una palabra secreta de manera aleatoria
+func choosingWord(_ secretListOfDangerousWords: [String]) -> String {
+    let dangerousWordAssignment = secretListOfDangerousWords.randomElement() ?? ""
+    return dangerousWordAssignment
 }
- 
-func sw(_ secretWordAssignment: String, _ gl: [Character]) {
-    for l in secretWordAssignment {
-        if gl.contains(l) {
-            print(l, terminator: " ")
+// funcion recorre la letra en la palabra secreta y muestra si la letra ingresada se encuentra en la palabra
+func concordanceCheck(_ dangerousWordAssignment: String, _ listOfLettersFound: [Character]) {
+    for letterEntered in dangerousWordAssignment {
+        if listOfLettersFound.contains(letterEntered) {
+            print(letterEntered, terminator: " ")
         } else {
             print("_", terminator: " ")
         }
     }
     print()
 }
+// funcion realiza las peticiones, verifica si no hay coincidencia, si coincide devuelve el dato encontrado
  
-func take(_ gl: [Character]) -> Character {
+func controlOfEnteredLetters(_ listOfLettersFound: [Character]) -> Character {
     print("Enter a letter: ", terminator: "")
-    var l = Character((readLine() ?? "").lowercased())
+    var letterEntered = Character((readLine() ?? "").lowercased())
  
-    while l.isLetter == false || String(l).count != 1 {
+    while letterEntered.isLetter == false || String(letterEntered).count != 1 {
         print("Please enter only one letter: ", terminator: "")
-        l = Character((readLine() ?? "").lowercased())
+        letterEntered = Character((readLine() ?? "").lowercased())
     }
  
-    while gl.contains(l) {
+    while listOfLettersFound.contains(letterEntered) {
         print("You already guessed that letter, try another one: ", terminator: "")
-        l = Character((readLine() ?? "").lowercased())
+        letterEntered = Character((readLine() ?? "").lowercased())
     }
-    return l
+    return letterEntered
 }
- 
-func gameControlDangerWords() {
+
+// funcion verifica y guarda las secuencias de avance,vidas, derrotas o victorias del juego
+func gameControlDangerousWords() {
     print("Welcome to the Danger Words game!")
-    let secret = cw(listOfDangerousWords)
-    var guessed: [Character] = []
-    var trys = 8
- 
+    let secretWord = choosingWord(secretListOfDangerousWords)
+    var guessedLetter: [Character] = []
+    var gameAttempts = 8
+
     while true {
-        sw(secret, guessed)
-        let L = take(guessed)
+        concordanceCheck(secretWord, guessedLetter)
+        let validatedEnteredLetter = controlOfEnteredLetters(guessedLetter)
  
-        if secret.contains(L) {
-            guessed.append(L)
+        if secretWord.contains(validatedEnteredLetter) {
+            guessedLetter.append(validatedEnteredLetter)
             print("Well done! You guessed a letter.")
         } else {
-            trys -= 1
+            gameAttempts -= 1
             print("Sorry, that letter is not in the word.")
-            print("You have \(trys) lives remaining.")
- 
-            if trys == 0 {
-                print("Game Over! The word was: \(secret)")
+            print("You have \(gameAttempts) lives remaining.")
+            if gameAttempts == 0 {
+                print("Game Over! The word was: \(secretWord)")
                 break
-            } else if Set(secret).isSubset(of: Set(guessed)) {
-                print("Congratulations! You guessed the word: \(secret)")
+            } else if Set(secretWord).isSubset(of: Set(guessedLetter)) {
+                print("Congratulations! You guessed the word: \(secretWord)")
                 break
             }
         }
     }
 }
- 
-gameControlDangerWords()
+
+// llamado de ejecucion y controles de juego
+gameControlDangerousWords()
+
