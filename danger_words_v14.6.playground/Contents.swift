@@ -1,12 +1,12 @@
-let w = ["algorithm", "language", "compiler", "variable", "function", "loop", "class", "object", "inheritance", "polymorphism", "encapsulation", "modularity", "debugging", "integration", "development", "frontend", "backend", "database", "API", "framework", "library", "programmer", "syntax", "compilation", "interpretation", "link", "optimization", "repository", "constant"]
+let listOfDangerousWords = ["algorithm", "language", "compiler", "variable", "function", "loop", "class", "object", "inheritance", "polymorphism", "encapsulation", "modularity", "debugging", "integration", "development", "frontend", "backend", "database", "API", "framework", "library", "programmer", "syntax", "compilation", "interpretation", "link", "optimization", "repository", "constant"]
  
-func cw(_ w: [String]) -> String {
-    let s = w.randomElement() ?? ""
-    return s
+func choiseOfWord(_ listOfDangerousWords: [String]) -> String {
+    let secretWordAssignment = listOfDangerousWords.randomElement() ?? ""
+    return secretWordAssignment
 }
  
-func sw(_ s: String, _ gl: [Character]) {
-    for l in s {
+func sw(_ secretWordAssignment: String, _ gl: [Character]) {
+    for l in secretWordAssignment {
         if gl.contains(l) {
             print(l, terminator: " ")
         } else {
@@ -32,9 +32,9 @@ func take(_ gl: [Character]) -> Character {
     return l
 }
  
-func dangerWords() {
+func gameControlDangerWords() {
     print("Welcome to the Danger Words game!")
-    let secret = cw(w)
+    let secret = cw(listOfDangerousWords)
     var guessed: [Character] = []
     var trys = 8
  
@@ -61,4 +61,4 @@ func dangerWords() {
     }
 }
  
-dangerWords()
+gameControlDangerWords()
